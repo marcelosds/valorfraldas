@@ -1,0 +1,230 @@
+ScreenManager:
+    LoginScreen:
+    LeituraScreen:
+    ConfiguracaoScreen:
+
+
+<LoginScreen>
+
+    name: "login"
+
+    FloatLayout:
+
+        MDTopAppBar:
+
+            title: "Login"
+            pos_hint: {'top': 1}
+            elevation: 5
+            left_action_items: [["menu", lambda x: nav_drawer.set_state('open')]]
+            right_action_items: [["help", lambda x: app.callback()]]
+
+
+        Image:
+            source: 'images/user.png'
+            size_hint: (0.5, 0.5)
+            pos_hint: {'center_x': 0.5, 'center_y': 0.75}
+
+        MDLabel:
+            text: "Seja bem vindo!"
+            font_style: 'H5'
+            bold: True
+            halign: "center"
+            pos_hint: {'center_x': 0.5, 'center_y': 0.60}
+
+        MDLabel:
+            text: "Faça o login para continuar."
+            font_style: 'Caption'
+            halign: "center"
+            pos_hint: {'center_x': 0.5, 'center_y': 0.56}
+
+        MDTextField:
+            id: email
+            hint_text: "Email"
+            pos_hint: {'center_x': 0.5, 'center_y': 0.45}
+            size_hint_x: .8
+            icon_right: 'email'
+            icon_right_color: app.theme_cls.primary_color
+
+        MDTextField:
+            id: senha
+            hint_text: "Senha"
+            pos_hint: {'center_x': 0.5, 'center_y': 0.37}
+            size_hint_x: .8
+            icon_right: 'lock'
+            password: True
+            icon_right_color: app.theme_cls.primary_color
+
+
+        MDFillRoundFlatButton:
+            text: 'Entrar'
+            font_size: 40
+            elevation: 5
+            pos_hint: {'center_x': 0.5, 'center_y': 0.22}
+            text_color: 1,1,1,1
+            size_hint_x: .8
+            on_release: root.login()
+
+
+        MDFillRoundFlatButton:
+            text: 'Cadastrar'
+            font_size: 40
+            elevation: 5
+            pos_hint: {'center_x': 0.5, 'center_y': 0.14}
+            text_color: 1,1,1,1
+            size_hint_x: .8
+            on_release: root.cria_usuario()
+
+
+
+        MDTextButton:
+            text: 'Esqueci minha senha'
+            font_size: 30
+            pos_hint: {'center_x': 0.5, 'center_y': 0.07}
+            on_release: root.send_password_reset_email()
+
+    MDNavigationDrawer:
+        id: nav_drawer
+        orientation: 'vertical'
+        Image:
+            source: 'images/logo1.png'
+            size_hint: None,None
+            size: '50dp','50dp'
+            pos_hint: {'center_x': 0.5}
+        MDLabel:
+            text: "Valores das Fraldas"
+            adaptive_height: True
+            halign: 'center'
+            font_size: 30
+
+        MDNavigationDrawerMenu:
+
+            MDNavigationDrawerItem:
+                icon: 'logout'
+                text: "Fechar Aplicativo"
+                on_release: exit()
+
+
+
+<LeituraScreen>
+
+    name: "leitura"
+
+    FloatLayout:
+
+        MDTopAppBar:
+            title: "Verificar Valor"
+            pos_hint: {'top': 1}
+            elevation: 5
+            left_action_items: [["menu", lambda x: nav_drawer.set_state('open')]]
+            right_action_items: [["help", lambda x: app.callback()]]
+
+
+        Image:
+            id: fralda1
+            source: app.imagem
+            size_hint: None,None
+            size: '90dp','90dp'
+            pos_hint: {'center_x': 0.5, 'center_y': 0.75}
+
+
+        MDLabel:
+            id: mensagem
+            text: app.mensagem
+            font_size: 30
+            font_style: 'Caption'
+            halign: "center"
+            pos_hint: {'center_x': 0.5, 'center_y': 0.65}
+
+
+
+    MDNavigationDrawer:
+        id: nav_drawer
+        orientation: 'vertical'
+        Image:
+            source: 'images/logo1.png'
+            size_hint: None,None
+            size: '50dp','50dp'
+            pos_hint: {'center_x': 0.5}
+        MDLabel:
+            text: "Verificar Valor"
+            adaptive_height: True
+            halign: 'center'
+            font_size: 30
+
+        MDNavigationDrawerMenu:
+
+            MDNavigationDrawerItem:
+                icon: 'cog'
+                text: "Configuração"
+                on_release: root.manager.current = 'configuracao'
+
+
+            MDNavigationDrawerItem:
+                icon: 'close'
+                text: "Logoff"
+                on_release: root.manager.current = 'login'
+
+
+<ConfiguracaoScreen>
+
+    name: "configuracao"
+
+    FloatLayout:
+
+        MDTopAppBar:
+
+            title: "Configuração"
+            pos_hint: {'top': 1}
+            elevation: 5
+            left_action_items: [["menu", lambda x: nav_drawer.set_state('open')]]
+            right_action_items: [["help", lambda x: app.callback()]]
+
+
+        MDLabel:
+            text: "Valor base, preço do produto será bom se estiver abaixo desse aqui:"
+            font_style: 'Caption'
+            pos_hint: {'center_x': 0.55, 'center_y': 0.8}
+
+        MDTextField:
+            id: valor
+            hint_text: "Valor de Referência:"
+            pos_hint: {'center_x': 0.45, 'center_y': 0.75}
+            size_hint_x: .8
+            icon_right_color: app.theme_cls.primary_color
+
+
+        MDFillRoundFlatButton:
+            text: 'Gravar Valor'
+            font_size: 30
+            pos_hint: {'center_x': 0.5, 'center_y': 0.1}
+            text_color: 1,1,1,1
+            size_hint_x: .8
+            on_release: root.define_referencia()
+
+
+
+    MDNavigationDrawer:
+        id: nav_drawer
+        orientation: 'vertical'
+        Image:
+            source: 'images/logo1.png'
+            size_hint: None,None
+            size: '50dp','50dp'
+            pos_hint: {'center_x': 0.5}
+        MDLabel:
+            text: "Valores das Fraldas"
+            adaptive_height: True
+            halign: 'center'
+            font_size: 30
+
+        MDNavigationDrawerMenu:
+
+            MDNavigationDrawerItem:
+                icon: 'currency-brl'
+                text: "Verificar Valor"
+                on_release: root.manager.current = 'leitura'
+
+            MDNavigationDrawerItem:
+                icon: 'close'
+                text: "Logoff"
+                on_release: root.manager.current = 'login'
