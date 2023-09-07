@@ -49,7 +49,7 @@ mensagem = f'''{marca} {preco}'''
 
 imagem = 'images/logo.png'
 
-def consulta_dados(self):
+def consulta_dados():
     url = "https://www.saojoaofarmacias.com.br/fr-pampers-confortsec-bag-super-xxg-52un/p"
 
     headers = {
@@ -325,7 +325,7 @@ def consulta_referencia(cursor):
     return valor_referencia
     fechar_conexao(conn)
 
-def pushbullet_noti(self):
+def pushbullet_noti():
     TOKEN = 'o.ityPUqlC4tHNrCbMromdgP82Xws8Kjrs'  # Passe o Token de acaesso aqui
     title = "Valor das Fraldas"
     body = f'''O Valor das Fraldas Pampers é: {preco}\n\n''' \
@@ -336,16 +336,16 @@ def pushbullet_noti(self):
                          data=json.dumps(msg),
                          headers={'Authorization': 'Bearer ' + TOKEN,
                                   'Content-Type': 'application/json'})
-def mostra_mensagem(self):
+def mostra_mensagem():
     conn, cursor = conectar_banco_dados()
     valor_referencia = consulta_referencia(cursor)
     valor = valor_referencia
     if preco_formatado <= valor[0]:
-        pushbullet_noti(self)
+        pushbullet_noti()
     fechar_conexao(conn)
 
 
-def dispara_email(self):
+def dispara_email():
     conn, cursor = conectar_banco_dados()
     valor_referencia = consulta_referencia(cursor)
     valor = valor_referencia
@@ -394,11 +394,13 @@ def enviar_email():
         popup.open()
 
 
-Clock.schedule_interval(consulta_dados, 30)
-Clock.schedule_interval(mostra_mensagem, 30)
-Clock.schedule_interval(dispara_email, 30)
+# Clock.schedule_interval(consulta_dados, 30)
+# Clock.schedule_interval(mostra_mensagem, 30)
+# Clock.schedule_interval(dispara_email, 30)
 
-
+consulta_dados()
+mostra_mensagem()
+dispara_email()
 
 
 
